@@ -101,7 +101,9 @@ void SetState()
   // TODO:
   // 1. Get command from bluetooth 
   // 2. Change state if need
-  
+  if (BT.available())
+  ask_BT();
+
   if (Serial.available()) {
       // char c1 = ;
       BT.write(Serial.read());
@@ -119,6 +121,6 @@ void SetState()
 void Search()
 {
   // TODO: let your car search graph(maze) according to bluetooth command from computer(python code)
-  
+  tracking();
 }
 /*===========================define function===========================*/
