@@ -10,18 +10,18 @@
 /*check out what you have learned from week 2*/
 
 enum BT_CMD {
-  NOTHING,
-  TurnRight,// 1
-  TurnLeft, 
-  MoveOn,
-  TurnOver
+  S, // stop
+  M, // move on 
+  R, // righ turn 
+  L, // left turn 
+  B, // back turn
   // TODO: add your own command type here
 };
 
 BT_CMD ask_BT(){ // get command from python
-    BT_CMD message=NOTHING;
-    char cmd;
-    // if(BT.available()){
+    BT_CMD message = S;
+    char cmd = '\0';
+    if(BT.available()){
       
     //   Serial.write(BT.read());
       
@@ -29,12 +29,12 @@ BT_CMD ask_BT(){ // get command from python
       // 1. get cmd from Serial1(bluetooth serial)
       // 2. link bluetooth message to your own command type
 
-      // #ifdef DEBUG
-      // Serial.print("cmd : ");
-      // Serial.println(cmd);
-      // #endif
-   // }
-    // return message;
+      #ifdef DEBUG
+      Serial.print("cmd : ");
+      Serial.println(cmd);
+      #endif
+   }
+    return message;
 }// ask_BT
 
 // send msg back through Serial1(bluetooth serial)
