@@ -101,21 +101,6 @@ void SetState()
   // TODO:
   // 1. Get command from bluetooth 
   // 2. Change state if need
-  if (BT.available())
-  ask_BT();
-
-  if (Serial.available()) {
-      // char c1 = ;
-      BT.write(Serial.read());
-      // BT.println(c1);
-    }
-
-  if (BT.available()) {
-      // char c2 = BT.read();
-      Serial.write(BT.read());
-      // Serial.println(c2);
-    }
-  
 }
 
 void Search()
