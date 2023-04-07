@@ -119,6 +119,6 @@ void SetState()
 void Search()
 {
   // TODO: let your car search graph(maze) according to bluetooth command from computer(python code)
-  
+  tracking();
 }
 /*===========================define function===========================*/

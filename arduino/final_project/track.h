@@ -38,7 +38,7 @@ void tracking(int l2, int l1, int m0, int r1, int r2){ // 五個IR
   double error=l2*_w2+l1*_w1+m0*_w0+r1*(-_w1)+r2*(-_w2);
   double vR, vL; // 馬達左右轉速原始值(從PID control 計算出來)。Between -255 to 255.
   double adj_R=1, adj_L=1; // 馬達轉速修正係數。MotorWriting(_Tp,_Tp)如果歪掉就要用參數修正。
-    
+  int dir = 0;
   // TODO: complete your P/PID tracking code
   
   // end TODO
