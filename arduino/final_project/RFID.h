@@ -34,7 +34,7 @@ byte* rfid(byte& idSize) {
       Serial.println();
       #endif
       mfrc522.PICC_HaltA();  // 讓卡片進入停止模式
-      return id;
+      return id; // return type : byte*
     }
     return 0;
 }
