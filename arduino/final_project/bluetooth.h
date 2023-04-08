@@ -8,7 +8,8 @@
 
 /*if you have no idea how to start*/
 /*check out what you have learned from week 2*/
-# include <cstring>
+#ifndef Bluetooth
+#define Bluetooth
 enum BT_CMD {
   S, // stop
   M, // move on 
@@ -21,7 +22,7 @@ enum BT_CMD {
 void getPath(char& tMap){
   if(BT.available()){
       BT.readBytes(tMap, 256);
-      Serail.println(tMap);
+      Serial.println(tMap);
   }
 }
 
@@ -68,3 +69,4 @@ void send_byte(byte *id, byte& idSize) {
   Serial.println();
   #endif
 }// send_byte
+#endif
