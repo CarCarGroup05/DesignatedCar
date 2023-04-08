@@ -89,11 +89,16 @@ void SetState();// switch the state
 /*===========================declare function prototypes===========================*/
 
 /*===========================define function===========================*/
+
+char map[512];
 void loop()
 {
    if(!state) MotorWriting(0,0); // hault the car
    else Search(); // car can start search
    SetState(); // 
+   
+   getPath(map);
+   
 }
 
 void SetState()
@@ -101,6 +106,7 @@ void SetState()
   // TODO:
   // 1. Get command from bluetooth 
   // 2. Change state if need
+  
 }
 
 void Search()
@@ -109,3 +115,4 @@ void Search()
   tracking();
 }
 /*===========================define function===========================*/
+
