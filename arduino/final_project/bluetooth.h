@@ -18,14 +18,12 @@ enum BT_CMD {
   // TODO: add your own command type here
 };
 
-void getPath(char& map){
+void getPath(char& tMap){
   if(BT.available()){
-      BT.readBytes(map, 256);
-      Serail.println(map);
+      BT.readBytes(tMap, 256);
+      Serail.println(tMap);
   }
 }
-
-
 
 BT_CMD ask_BT(){ // get command from python
     BT_CMD message = S;
@@ -47,6 +45,7 @@ BT_CMD ask_BT(){ // get command from python
 // send msg back through Serial1(bluetooth serial)
 // can use send_byte alternatively to send msg back
 // (but need to convert to byte type)
+
 void gsend_ms(const char& msg) // send command to python
 {
      // TODO:

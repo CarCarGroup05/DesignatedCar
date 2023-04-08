@@ -90,13 +90,12 @@ void SetState();// switch the state
 void mapState = 0; //
 /*===========================define function===========================*/
 
-char map[512];
+char treasureMap[512];
 void loop()
 {
    if(!state) MotorWriting(0,0); // hault the car
    else Search(); // car can start search
    SetState(); // 
-   
    getPath(map);
    
 }
