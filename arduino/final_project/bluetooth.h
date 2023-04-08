@@ -8,7 +8,7 @@
 
 /*if you have no idea how to start*/
 /*check out what you have learned from week 2*/
-
+# include <cstring>
 enum BT_CMD {
   S, // stop
   M, // move on 
@@ -18,13 +18,20 @@ enum BT_CMD {
   // TODO: add your own command type here
 };
 
+void getPath(char& map){
+  if(BT.available()){
+      BT.readBytes(map, 256);
+      Serail.println(map);
+  }
+}
+
+
+
 BT_CMD ask_BT(){ // get command from python
     BT_CMD message = S;
     char cmd = '\0';
     if(BT.available()){
-      
-    //   Serial.write(BT.read());
-      
+      Serial.write(BT.read);
       // TODO:
       // 1. get cmd from Serial1(bluetooth serial)
       // 2. link bluetooth message to your own command type
@@ -44,7 +51,6 @@ void gsend_ms(const char& msg) // send command to python
 {
      // TODO:
      if (Serial.available()) {
-      
       BT.write(Serial.read());
      }
 
