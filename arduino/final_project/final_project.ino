@@ -91,7 +91,6 @@ BT_CMD _cmd = S; //enum for bluetooth message, reference in bluetooth.h line 2
 
 /*===========================declare function prototypes===========================*/
 void Search();// search graph
-void SetState();// switch the state
 void getPath(char tMap);
 /*===========================declare function prototypes===========================*/
 
