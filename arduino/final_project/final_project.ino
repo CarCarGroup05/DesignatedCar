@@ -97,7 +97,6 @@ BT_CMD _cmd = S; //enum for bluetooth message, reference in bluetooth.h line 2
 
 /*===========================declare function prototypes===========================*/
 void Search();// search graph
-void SetState();// switch the state
 void getPath(char tMap);
 /*===========================declare function prototypes===========================*/
 
@@ -137,7 +136,6 @@ void loop(){
     }
   }
   Search(); // car can start search
-=======
 int mapState = 0; //
 /*===========================define function===========================*/
 
@@ -156,14 +154,6 @@ void loop()
    
    byte idSize = 8;
    send_byte(rfid(idSize)/*, idSize*/); 
-}
-
-void SetState()
-{
-  // TODO:
-  // 1. Get command from bluetooth 
-  // 2. Change state if need
-  
 }
 
 void Search()
