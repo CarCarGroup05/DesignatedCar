@@ -77,7 +77,7 @@ void setup()
 /*=====Import header files=====*/
 #include "RFID.h"
 #include "track.h"
-#include "bluetooth.h"
+// #include "bluetooth.h"
 #include "node.h"
 /*=====Import header files=====*/
 
@@ -86,12 +86,15 @@ int l2=0,l1=0,m0=0,r1=0,r2=0; //紅外線模組的讀值(0->white,1->black)
 int _Tp=160; //set your own value for motor power
 bool state=false; //set state to false to halt the car, set state to true to activate the car
 BT_CMD _cmd = S; //enum for bluetooth message, reference in bluetooth.h line 2
+// BT_CMD _cmd = NOTHING; //enum for bluetooth message, reference in bluetooth.h line 2
 /*===========================initialize variables===========================*/
 
 /*===========================declare function prototypes===========================*/
 void Search();// search graph
 void SetState();// switch the state
+void getPath(char tMap);
 /*===========================declare function prototypes===========================*/
+
 /*===========================define function===========================*/
 void loop(){
   while(!start){
@@ -128,6 +131,26 @@ void loop(){
     }
   }
   Search(); // car can start search
+=======
+int mapState = 0; //
+/*===========================define function===========================*/
+
+char treasureMap[256];
+void loop()
+{
+   if(!state) MotorWriting(0,0); // hault the car
+   else Search(); // car can start search
+   SetState(); // 
+   getPath(treasureMap);
+   
+}
+
+void SetState()
+{
+  // TODO:
+  // 1. Get command from bluetooth 
+  // 2. Change state if need
+  
 }
 
 void Search()
@@ -141,3 +164,9 @@ void Search()
   }
 }
 /*===========================define function===========================*/
+void getPath(char tMap){
+  if(BT.available()){
+      BT.readBytes(&tMap, 256);
+      Serial.println(tMap);
+  }
+}

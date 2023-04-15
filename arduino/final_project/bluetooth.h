@@ -8,7 +8,7 @@
 
 /*if you have no idea how to start*/
 /*check out what you have learned from week 2*/
-char inptemp[10];
+
 enum BT_CMD {
   S, // stop
   M, // move on 
@@ -42,11 +42,11 @@ bool askStart(){
 // send msg back through Serial1(bluetooth serial)
 // can use send_byte alternatively to send msg back
 // (but need to convert to byte type)
+
 void gsend_ms(const char& msg) // send command to python
 {
      // TODO:
      if (Serial.available()) {
-      
       BT.write(Serial.read());
      }
 
@@ -65,3 +65,4 @@ void send_byte(byte *id, byte& idSize) {
   Serial.println();
   #endif
 }// send_byte
+#endif
