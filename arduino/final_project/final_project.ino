@@ -39,7 +39,12 @@ SoftwareSerial BT (10, 11);
 #define SS_PIN       53       // 晶片選擇腳位
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // 建立MFRC522物件
 /*===========================define pin & create module object===========================*/
-
+int mapState = 0;
+bool start = false;
+bool received = false;
+char inp[10];
+char treasureMap[100];
+int irRead = 0;
 /*============setup============*/
 void setup()
 {
@@ -80,6 +85,7 @@ void setup()
 int l2=0,l1=0,m0=0,r1=0,r2=0; //紅外線模組的讀值(0->white,1->black)
 int _Tp=160; //set your own value for motor power
 bool state=false; //set state to false to halt the car, set state to true to activate the car
+BT_CMD _cmd = S; //enum for bluetooth message, reference in bluetooth.h line 2
 // BT_CMD _cmd = NOTHING; //enum for bluetooth message, reference in bluetooth.h line 2
 /*===========================initialize variables===========================*/
 
@@ -88,6 +94,44 @@ void Search();// search graph
 void SetState();// switch the state
 void getPath(char tMap);
 /*===========================declare function prototypes===========================*/
+
+/*===========================define function===========================*/
+void loop(){
+  while(!start){
+    while(!received){
+      if(Serial.available()){
+        BT.write(Serial.read());
+      }
+      received = ask_BT(treasureMap);
+    }
+    if(askStart()){
+      BT.write("Start~");
+      start = true;
+      switch(treasureMap[0]){
+        case 'S':
+           MotorWriting(0, 0);
+          break;
+        case 'M':
+          MotorWriting(_Tp, _Tp);
+          delay(1000);
+          break;
+        case 'R':
+          lrTurn(1);
+          break;
+        case 'L':
+          lrTurn(0);
+          break;
+        case 'B':
+          backTurn();
+          break;
+        default:
+           break;
+      }
+      mapState++;
+    }
+  }
+  Search(); // car can start search
+=======
 int mapState = 0; //
 /*===========================define function===========================*/
 
@@ -114,6 +158,10 @@ void Search()
   // TODO: let your car search graph(maze) according to bluetooth command from computer(python code)
   if(tracking(treasureMap[mapState]))
     mapState++;
+  if(mapState >= strlen(treasureMap)){
+    MotorWriting(0, 0);
+    BT.write("done!");
+  }
 }
 /*===========================define function===========================*/
 void getPath(char tMap){
