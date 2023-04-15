@@ -144,6 +144,7 @@ char treasureMap[256];
 
 void SetState();
 bool detected = false;
+
 void loop()
 {
    if(!state) MotorWriting(0,0); // hault the car
