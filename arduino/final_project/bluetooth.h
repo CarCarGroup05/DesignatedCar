@@ -8,7 +8,7 @@
 
 /*if you have no idea how to start*/
 /*check out what you have learned from week 2*/
-
+char inptemp[10];
 enum BT_CMD {
   S, // stop
   M, // move on 
@@ -18,25 +18,27 @@ enum BT_CMD {
   // TODO: add your own command type here
 };
 
-BT_CMD ask_BT(){ // get command from python
-    BT_CMD message = S;
-    char cmd = '\0';
-    if(BT.available()){
-      
-    //   Serial.write(BT.read());
-      
-      // TODO:
-      // 1. get cmd from Serial1(bluetooth serial)
-      // 2. link bluetooth message to your own command type
+bool ask_BT(char treasureMap[]){ // get command from python
+  if(BT.available()){
+    BT.readBytes(treasureMap, 10);
+    BT.write("Received!");
+    Serial.println(treasureMap);
+    received = true;
+    return true;
+  }
+  return false;
+}
 
-      #ifdef DEBUG
-      Serial.print("cmd : ");
-      Serial.println(cmd);
-      #endif
-   }
-    return message;
-}// ask_BT
-
+bool askStart(){
+  if(BT.available()){
+      BT.readBytes(inp, 10);
+      if(inptemp[0] == 'Q')
+        return true;
+      else
+        return false;
+  }
+  return false;
+}
 // send msg back through Serial1(bluetooth serial)
 // can use send_byte alternatively to send msg back
 // (but need to convert to byte type)
