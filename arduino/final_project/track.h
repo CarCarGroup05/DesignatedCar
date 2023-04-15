@@ -74,15 +74,17 @@ bool tracking(char nextMo){
     switch(nextMo){
       case 'S':
         MotorWriting(0, 0);
+        delay(100000);
         break;
       case 'M':
         MotorWriting(_Tp, _Tp);
+        delay(1000);
         break;
       case 'R':
-        lrTurn(1);
+        lrTurn(0);
         break;
       case 'L':
-        lrTurn(0);
+        lrTurn(1);
         break;
       case 'B':
         backTurn();
