@@ -13,7 +13,6 @@
 /*===========================import variable===========================*/
 int extern _Tp;
 /*===========================import variable===========================*/
-
 // Write the voltage to motor.
 void MotorWriting(double vL, double vR) {
   // TODO: use TB6612 to control motor voltage & direction
@@ -30,7 +29,7 @@ void MotorInverter() {
   digitalWrite(MotorL_I4, 0);
   MotorWriting(_Tp, _Tp);
 }// MotorInverter
-MotorMove(){
+void MotorMove(){
   digitalWrite(MotorR_I1, 1);
   digitalWrite(MotorR_I2, 0);
   digitalWrite(MotorL_I3, 1);

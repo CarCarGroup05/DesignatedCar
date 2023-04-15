@@ -19,18 +19,17 @@ enum BT_CMD {
   // TODO: add your own command type here
 };
 
-void getPath(char& tMap){
-  if(BT.available()){
-      BT.readBytes(tMap, 256);
-      Serial.println(tMap);
-  }
-}
+// void getPath(char& tMap){
+//   if(BT.available()){
+//       BT.readBytes(tMap, 256);
+//       Serial.println(tMap);
+//   }
+// }
 
 BT_CMD ask_BT(){ // get command from python
     BT_CMD message = S;
     char cmd = '\0';
-    if(BT.available()){
-      Serial.write(BT.read);
+    
       // TODO:
       // 1. get cmd from Serial1(bluetooth serial)
       // 2. link bluetooth message to your own command type
@@ -39,7 +38,6 @@ BT_CMD ask_BT(){ // get command from python
       Serial.print("cmd : ");
       Serial.println(cmd);
       #endif
-   }
     return message;
 }// ask_BT
 
@@ -50,23 +48,28 @@ BT_CMD ask_BT(){ // get command from python
 void gsend_ms(const char& msg) // send command to python
 {
      // TODO:
-     if (Serial.available()) {
-      BT.write(Serial.read());
-     }
+    //  if (Serial.available()) {
+    //   BT.write(Serial.read());
+    //  }
 
 }// send_msg
 
 // send UID back through Serial1(bluetooth serial)
-void send_byte(byte *id, byte& idSize) {
-  for (byte i = 0; i < idSize; i++) {  // Send UID consequently.
-    BT.write(id[i]);
-  }
-  #ifdef DEBUG
-  Serial.print("Sent id: ");
-  for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
-    Serial.print(id[i], HEX);
+void send_byte(byte *id/*, byte& idSize*/) {
+  for (byte i = 0; i < 4; i++) {  // Send UID consequently.
+    // Serial.print("Success!");
+      BT.write(id[i]);
+      Serial.print(id[i],HEX);
   }
   Serial.println();
-  #endif
+  return;
+  // #ifdef DEBUG
+  // Serial.print("Sent id: ");
+  // for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
+  //   Serial.print(id[i], HEX);
+  // }
+  // Serial.println();
+
+  // #endif
 }// send_byte
 #endif
