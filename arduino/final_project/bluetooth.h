@@ -39,6 +39,7 @@ bool askStart(){
   }
   return false;
 }
+
 // send msg back through Serial1(bluetooth serial)
 // can use send_byte alternatively to send msg back
 // (but need to convert to byte type)
@@ -46,23 +47,28 @@ bool askStart(){
 void gsend_ms(const char& msg) // send command to python
 {
      // TODO:
-     if (Serial.available()) {
-      BT.write(Serial.read());
-     }
+    //  if (Serial.available()) {
+    //   BT.write(Serial.read());
+    //  }
 
 }// send_msg
 
 // send UID back through Serial1(bluetooth serial)
-void send_byte(byte *id, byte& idSize) {
-  for (byte i = 0; i < idSize; i++) {  // Send UID consequently.
-    BT.write(id[i]);
-  }
-  #ifdef DEBUG
-  Serial.print("Sent id: ");
-  for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
-    Serial.print(id[i], HEX);
+void send_byte(byte *id/*, byte& idSize*/) {
+  for (byte i = 0; i < 4; i++) {  // Send UID consequently.
+    // Serial.print("Success!");
+      BT.write(id[i]);
+      Serial.print(id[i],HEX);
   }
   Serial.println();
-  #endif
+  return;
+  // #ifdef DEBUG
+  // Serial.print("Sent id: ");
+  // for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
+  //   Serial.print(id[i], HEX);
+  // }
+  // Serial.println();
+
+  // #endif
 }// send_byte
 #endif

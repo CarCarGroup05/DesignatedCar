@@ -46,15 +46,19 @@ char inp[10];
 char treasureMap[100];
 int irRead = 0;
 /*============setup============*/
+// MFRC522 *mfrc522;
+// 宣告MFRC522指標
 void setup()
 {
    //bluetooth initialization
    BT.begin(9600);
    //Serial window
    Serial.begin(9600);
-   //RFID initial
+
+  //RFID initial
    SPI.begin();
    mfrc522.PCD_Init();
+
    //TB6612(motor) pin
    pinMode(MotorR_I1,   OUTPUT);
    pinMode(MotorR_I2,   OUTPUT);
@@ -62,6 +66,7 @@ void setup()
    pinMode(MotorL_I4,   OUTPUT);
    pinMode(MotorL_PWML, OUTPUT);
    pinMode(MotorR_PWMR, OUTPUT);
+
    //tracking(IR) pin
    pinMode(IRpin_LL, INPUT); 
    pinMode(IRpin_L, INPUT);
@@ -71,13 +76,14 @@ void setup()
 #ifdef DEBUG
   Serial.println("Start!");
 #endif
+
 }
 /*============setup============*/
 
 /*=====Import header files=====*/
 #include "RFID.h"
 #include "track.h"
-// #include "bluetooth.h"
+#include "bluetooth.h"
 #include "node.h"
 /*=====Import header files=====*/
 
@@ -136,6 +142,10 @@ int mapState = 0; //
 /*===========================define function===========================*/
 
 char treasureMap[256];
+// bool detected = false;
+
+void SetState();
+bool detected = false;
 void loop()
 {
    if(!state) MotorWriting(0,0); // hault the car
@@ -143,6 +153,8 @@ void loop()
    SetState(); // 
    getPath(treasureMap);
    
+   byte idSize = 8;
+   send_byte(rfid(idSize)/*, idSize*/); 
 }
 
 void SetState()
@@ -158,10 +170,14 @@ void Search()
   // TODO: let your car search graph(maze) according to bluetooth command from computer(python code)
   if(tracking(treasureMap[mapState]))
     mapState++;
+
+
+  
   if(mapState >= strlen(treasureMap)){
     MotorWriting(0, 0);
     BT.write("done!");
   }
+
 }
 /*===========================define function===========================*/
 void getPath(char tMap){
