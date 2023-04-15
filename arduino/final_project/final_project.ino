@@ -131,7 +131,6 @@ void loop(){
     }
   }
   Search(); // car can start search
-=======
 int mapState = 0; //
 /*===========================define function===========================*/
 
@@ -143,14 +142,6 @@ void loop()
    SetState(); // 
    getPath(treasureMap);
    
-}
-
-void SetState()
-{
-  // TODO:
-  // 1. Get command from bluetooth 
-  // 2. Change state if need
-  
 }
 
 void Search()
