@@ -139,7 +139,7 @@ bool tracking(char nextMo){
     motionSwitch(nextMo);
   return atNode;
 }
-void holdDelay(int time{
+void holdDelay(int time){
   for (int i = 0; i < time/40; i++){
     send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
     delay(40);
