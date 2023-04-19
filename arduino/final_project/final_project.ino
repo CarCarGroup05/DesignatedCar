@@ -67,10 +67,6 @@ void setup(){
   pinMode(IRpin_M, INPUT);
   pinMode(IRpin_R, INPUT);
   pinMode(IRpin_RR, INPUT);
-#ifdef DEBUG
-  Serial.println("Start!");
-  done();
-#endif
 }
 /*============setup============*/
 
@@ -98,27 +94,29 @@ void getPath(char tMap);
 
 /*===========================define function===========================*/
 void loop(){
+
   while(!start){
     while(!received){
-      if(Serial.available()){
+      if(Serial.available())
         BT.write(Serial.read());
-      }
       received = ask_BT(treasureMap);
+  send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
     }
     if(askStart()){
       BT.write("Start~");
       start = true;
       motionSwitch(treasureMap[0]);
+      done();
       mapState++;
     }
   }
   Search();
-  send_byte(rfid(idSize, newlyFound) /*, idSize*/, newlyFound);
   // flag newlyFound determines whether to send UID
 }
 
 /*===========================define function===========================*/
 void Search(){
+  send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   if(tracking(treasureMap[mapState]))
     mapState++;
   if(mapState >= strlen(treasureMap)){

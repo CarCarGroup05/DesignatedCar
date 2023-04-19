@@ -13,10 +13,12 @@ char inptemp[10]; // 儲存起始指令的 buffer
 extern bool received;
 
 bool ask_BT(char treasureMap[]){ // get command from python
+  // successs();
   if(BT.available()){
     BT.readBytes(treasureMap, 10);
     BT.write("Received!");
-    Serial.println(treasureMap);
+    for(int i = 0; i < strlen(treasureMap); i++)
+      Serial.println(treasureMap[i]);
     received = true;
     return true;
   }
@@ -29,7 +31,7 @@ bool askStart(){
       BT.readBytes(inptemp, 10);
       if(inptemp[0] == 'Q'){
         return true;
-        successs();
+        // successs();
       }
       else
         return false;
@@ -39,7 +41,7 @@ bool askStart(){
 }
 
 // send UID back through Serial1(bluetooth serial)
-void send_byte(byte *id/*, byte& idSize*/, bool newlyFound) {
+void send_byte(byte *id, byte& idSize, bool newlyFound){
   if(newlyFound){
     for (byte i = 0; i < 4; i++) {  // Send UID consequently.
       // Serial.print("Success!");
