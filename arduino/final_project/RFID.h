@@ -12,14 +12,15 @@
 #include <MFRC522.h>     // 引用程式庫
 /* pin---- SDA:9 SCK:13 MOSI:11 MISO:12 GND:GND RST:define on your own  */
 
-byte* rfid(byte& idSize) {
+byte* rfid(byte& idSize, bool& newlyFound) {
     // 確認是否有新卡片
-    // if(!mfrc522.PICC_IsNewCardPresent()) {
-    //   goto FuncEnd;
-    // } //PICC_IsNewCardPresent()：是否感應到新的卡片?
-    // if(!mfrc522.PICC_ReadCardSerial()) {
-    //   goto FuncEnd;
-    // }
+    if(!mfrc522.PICC_IsNewCardPresent()) {
+      newlyFound = true;
+      goto FuncEnd;
+    } //PICC_IsNewCardPresent()：是否感應到新的卡片?
+    if(!mfrc522.PICC_ReadCardSerial()) {
+      goto FuncEnd;
+    }
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
       byte *id = mfrc522.uid.uidByte;   // 取得卡片的UID
       idSize = mfrc522.uid.size;   // 取得UID的長度

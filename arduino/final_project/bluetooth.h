@@ -6,17 +6,11 @@
 // Modify		  [2020/03/27 Erik Kuo]
 /***************************************************************************/
 
-/*if you have no idea how to start*/
-/*check out what you have learned from week 2*/
+#ifndef bluetooth_h
+#define bluetooth_h
 
-enum BT_CMD {
-  S, // stop
-  M, // move on 
-  R, // righ turn 
-  L, // left turn 
-  B, // back turn
-  // TODO: add your own command type here
-};
+char inptemp[10]; // 儲存起始指令的 buffer
+extern bool received;
 
 bool ask_BT(char treasureMap[]){ // get command from python
   if(BT.available()){
@@ -31,44 +25,46 @@ bool ask_BT(char treasureMap[]){ // get command from python
 
 bool askStart(){
   if(BT.available()){
-      BT.readBytes(inp, 10);
-      // if(inptemp[0] == 'Q')
-      //   return true;
-      // else
-      //   return false;
+
+      BT.readBytes(inptemp, 10);
+      if(inptemp[0] == 'Q'){
+        return true;
+        successs();
+      }
+      else
+        return false;
+
   }
   return false;
 }
 
-// send msg back through Serial1(bluetooth serial)
-// can use send_byte alternatively to send msg back
-// (but need to convert to byte type)
-
-void gsend_ms(const char& msg) // send command to python
-{
-     // TODO:
-    //  if (Serial.available()) {
-    //   BT.write(Serial.read());
-    //  }
-
-}// send_msg
-
 // send UID back through Serial1(bluetooth serial)
-void send_byte(byte *id, byte& idSize) {
-  for (byte i = 0; i < idSize; i++) {  // Send UID consequently.
-    // Serial.print("Success!");
-    
-      BT.write(id[i]);
-      Serial.println(id[i],HEX);
+void send_byte(byte *id/*, byte& idSize*/, bool newlyFound) {
+  if(newlyFound){
+    for (byte i = 0; i < 4; i++) {  // Send UID consequently.
+      // Serial.print("Success!");
+        BT.write(id[i]);
+        Serial.print(id[i],HEX);
+    }
+    Serial.println();
+    newlyFound = false;
   }
   return;
-  // #ifdef DEBUG
-  // Serial.print("Sent id: ");
-  // for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
-  //   Serial.print(id[i], HEX);
-  // }
-  // Serial.println();
-
-  // #endif
-}// send_byte
+}
+// enum BT_CMD {
+//   S, // stop
+//   M, // move on 
+//   R, // righ turn 
+//   L, // left turn 
+//   B, // back turn
+//   // TODO: add your own command type here
+// };
+// #ifdef DEBUG
+// Serial.print("Sent id: ");
+// for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
+//   Serial.print(id[i], HEX);
+// }
+// Serial.println();
 // #endif
+// send_byte
+#endif
