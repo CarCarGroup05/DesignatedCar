@@ -9,11 +9,11 @@
 /*if you have no idea how to start*/
 /*check out what you have learned from week 1 & 6*/
 /*feel free to add your own function for convenience*/
-
+#ifndef track.h
+#define track.h
 /*===========================import variable===========================*/
 int extern _Tp;
 int tempIR = 0;// 五個IR的讀值總和
-bool atNode = true;
 /*===========================import variable===========================*/
 
 void MotorWriting(double vL, double vR) {
@@ -44,6 +44,7 @@ void backTurn(){
   MotorInverter();
   holdDelay(880);
   MotorMove();
+
 }
 
 void lrTurn(int n){
@@ -75,4 +76,4 @@ void motionSwitch(char nextMo){
     }
 }
 
-
+#endif

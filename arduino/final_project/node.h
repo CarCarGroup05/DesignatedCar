@@ -13,6 +13,7 @@
 // char temp[10];
 extern SoftwareSerial BT; 
 /*===========================import variable===========================*/
+
 void done(){
   Serial.print("\
   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⠛⠛⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⠛⠛⠿⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n\
