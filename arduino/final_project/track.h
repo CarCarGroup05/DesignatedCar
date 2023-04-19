@@ -9,11 +9,11 @@
 /*if you have no idea how to start*/
 /*check out what you have learned from week 1 & 6*/
 /*feel free to add your own function for convenience*/
-
+#ifndef track.h
+#define track.h
 /*===========================import variable===========================*/
 int extern _Tp;
 int tempIR = 0;// 五個IR的讀值總和
-bool atNode = true;
 /*===========================import variable===========================*/
 
 void MotorWriting(double vL, double vR) {
@@ -42,13 +42,13 @@ void MotorMove(){
 
 void backTurn(){
   MotorInverter();
-  delay(880);
+  holdDelay(880);
   MotorMove();
 }
 
 void lrTurn(int n){
   MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
-  delay(800);
+  holdDelay(800);
 }
 
 void motionSwitch(char nextMo){
@@ -59,7 +59,7 @@ void motionSwitch(char nextMo){
         break;
       case 'M':
         MotorWriting(_Tp, _Tp);
-        delay(1000);
+        holdDelay(1000);
         break;
       case 'R':
         lrTurn(0);
@@ -74,16 +74,4 @@ void motionSwitch(char nextMo){
         break;
     }
 }
-
-bool tracking(char nextMo){
-  atNode = true;
-  for(int i = 0; i < 5; i++){
-    if(!digitalRead(32 + 2 * i))
-      atNode = false;
-    tempIR += (i - 2)*digitalRead(32 + 2 * i);
-  }
-  MotorWriting(_Tp* (1 + tempIR * 0.15), _Tp * (1 - tempIR * 0.15));
-  if(atNode)
-    motionSwitch(nextMo);
-  return atNode;
-}
+#endif

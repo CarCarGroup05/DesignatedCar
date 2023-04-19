@@ -84,6 +84,7 @@ bool received = false;
 char treasureMap[256];
 int irRead = 0;
 byte idSize = 8;
+bool atNode = true;
 bool newlyFound = false; // flag set as true when find a new TREASURE
 /*===========================initialize variables===========================*/
 
@@ -100,30 +101,48 @@ void loop(){
       if(Serial.available())
         BT.write(Serial.read());
       received = ask_BT(treasureMap);
-  send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
     }
     if(askStart()){
-      BT.write("Start~");
+      BT.write("Start~\n");
+      MotorWriting(_Tp, _Tp);
       start = true;
-      motionSwitch(treasureMap[0]);
-      done();
-      mapState++;
+      // done();
     }
   }
+  send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   Search();
-  // flag newlyFound determines whether to send UID
 }
 
 /*===========================define function===========================*/
 void Search(){
   send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
+  // flag newlyFound determines whether to send UID
   if(tracking(treasureMap[mapState]))
     mapState++;
   if(mapState >= strlen(treasureMap)){
     MotorWriting(0, 0);
     BT.write("done!");
-    successs();
     start = false;
+  }
+}
+
+bool tracking(char nextMo){
+  atNode = true;
+  for(int i = 0; i < 5; i++){
+    if(!digitalRead(32 + 2 * i))
+      atNode = false;
+    tempIR += (i - 2)*digitalRead(32 + 2 * i);
+  }
+  MotorWriting(_Tp* (1 + tempIR * 0.15), _Tp * (1 - tempIR * 0.15));
+  if(atNode)
+    motionSwitch(nextMo);
+  return atNode;
+}
+
+void holdDelay(int time){ // delay and search for RFIDs simultaneously
+  for(int i = 0; i < time/40; i++){
+    delay(40);
+    send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   }
 }
 
