@@ -95,7 +95,6 @@ void getPath(char tMap);
 
 /*===========================define function===========================*/
 void loop(){
-
   while(!start){
     while(!received){
       if(Serial.available())
