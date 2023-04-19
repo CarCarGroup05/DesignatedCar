@@ -41,7 +41,6 @@ byte* rfid(byte& idSize, bool& newlyFound) {
       // #ifdef DEBUG
       // Serial.print("UID Size: ");       // 顯示卡片的UID長度值
       // #endif
-      
       // Serial.println();
       // Serial.println(idSize);
         // for (byte i = 0; i < idSize; i++) {  // 逐一顯示UID碼
