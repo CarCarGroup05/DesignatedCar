@@ -32,10 +32,10 @@ bool ask_BT(char treasureMap[]){ // get command from python
 bool askStart(){
   if(BT.available()){
       BT.readBytes(inp, 10);
-      if(inptemp[0] == 'Q')
-        return true;
-      else
-        return false;
+      // if(inptemp[0] == 'Q')
+      //   return true;
+      // else
+      //   return false;
   }
   return false;
 }
@@ -54,13 +54,13 @@ void gsend_ms(const char& msg) // send command to python
 }// send_msg
 
 // send UID back through Serial1(bluetooth serial)
-void send_byte(byte *id/*, byte& idSize*/) {
-  for (byte i = 0; i < 4; i++) {  // Send UID consequently.
+void send_byte(byte *id, byte& idSize) {
+  for (byte i = 0; i < idSize; i++) {  // Send UID consequently.
     // Serial.print("Success!");
+    
       BT.write(id[i]);
-      Serial.print(id[i],HEX);
+      Serial.println(id[i],HEX);
   }
-  Serial.println();
   return;
   // #ifdef DEBUG
   // Serial.print("Sent id: ");
@@ -71,4 +71,4 @@ void send_byte(byte *id/*, byte& idSize*/) {
 
   // #endif
 }// send_byte
-#endif
+// #endif

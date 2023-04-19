@@ -101,45 +101,46 @@ void getPath(char tMap);
 /*===========================declare function prototypes===========================*/
 
 /*===========================define function===========================*/
-void loop(){
-  while(!start){
-    while(!received){
-      if(Serial.available()){
-        BT.write(Serial.read());
-      }
-      received = ask_BT(treasureMap);
-    }
-    if(askStart()){
-      BT.write("Start~");
-      start = true;
-      switch(treasureMap[0]){
-        case 'S':
-           MotorWriting(0, 0);
-          break;
-        case 'M':
-          MotorWriting(_Tp, _Tp);
-          delay(1000);
-          break;
-        case 'R':
-          lrTurn(1);
-          break;
-        case 'L':
-          lrTurn(0);
-          break;
-        case 'B':
-          backTurn();
-          break;
-        default:
-           break;
-      }
-      mapState++;
-    }
-  }
-  Search(); // car can start search
-int mapState = 0; //
+// void loop(){
+//   while(!start){
+//     while(!received){
+//       if(Serial.available()){
+//         BT.write(Serial.read());
+//       }
+//       received = ask_BT(treasureMap);
+//     }
+//     if(askStart()){
+//       BT.write("Start~");
+//       start = true;
+//       switch(treasureMap[0]){
+//         case 'S':
+//            MotorWriting(0, 0);
+//           break;
+//         case 'M':
+//           MotorWriting(_Tp, _Tp);
+//           delay(1000);
+//           break;
+//         case 'R':
+//           lrTurn(1);
+//           break;
+//         case 'L':
+//           lrTurn(0);
+//           break;
+//         case 'B':
+//           backTurn();
+//           break;
+//         default:
+//            break;
+//       }
+//       mapState++;
+//     }
+//   }
+//   Search(); // car can start search
+// }
+// int mapState = 0; //
 /*===========================define function===========================*/
 
-char treasureMap[256];
+// char treasureMap[256];
 // bool detected = false;
 
 void SetState();
@@ -149,11 +150,12 @@ void loop()
 {
    if(!state) MotorWriting(0,0); // hault the car
    else Search(); // car can start search
-   SetState(); // 
+  //  SetState(); // 
    getPath(treasureMap);
    
    byte idSize = 8;
-   send_byte(rfid(idSize)/*, idSize*/); 
+   if (idSize != 0)
+    send_byte(rfid(idSize), idSize); 
 }
 
 void Search()
