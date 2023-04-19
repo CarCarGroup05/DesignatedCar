@@ -45,5 +45,7 @@ byte* rfid(byte& idSize, bool& newlyFound) {
       FuncEnd:; // goto 跳到這.
       return id; // return type : byte*
     }
+    else
+      idSize = 0;
     return 0;
 }

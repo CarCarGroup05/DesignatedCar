@@ -25,6 +25,7 @@ bool ask_BT(char treasureMap[]){ // get command from python
 
 bool askStart(){
   if(BT.available()){
+
       BT.readBytes(inptemp, 10);
       if(inptemp[0] == 'Q'){
         return true;
@@ -32,6 +33,7 @@ bool askStart(){
       }
       else
         return false;
+
   }
   return false;
 }
