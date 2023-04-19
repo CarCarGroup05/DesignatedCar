@@ -138,33 +138,7 @@ bool tracking(char nextMo){
     motionSwitch(nextMo);
   return atNode;
 }
-void motionSwitch(char nextMo){
-  switch(nextMo){
-      case 'S':
-        MotorWriting(0, 0);
-        delay(100000);
-        break;
-      case 'M':
-        MotorWriting(_Tp, _Tp);
-        holdDelay(1000);
-        break;
-      case 'R':
-        lrTurn(0);
-        holdDelay(800);
-        break;
-      case 'L':
-        lrTurn(1);
-        holdDelay(800);
-        break;
-      case 'B':
-        backTurn();
-        holdDelay(880);
-        MotorMove();
-        break;
-      default:
-        break;
-    }
-}
+
 void holdDelay(int time){ // delay and search for RFIDs simultaneously
   for(int i = 0; i < time/40; i++){
     delay(40);
