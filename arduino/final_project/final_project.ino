@@ -127,6 +127,24 @@ void Search(){
   }
 }
 
+bool tracking(char nextMo){
+  atNode = true;
+  for(int i = 0; i < 5; i++){
+    if(!digitalRead(32 + 2 * i))
+      atNode = false;
+    tempIR += (i - 2)*digitalRead(32 + 2 * i);
+  }
+  MotorWriting(_Tp* (1 + tempIR * 0.15), _Tp * (1 - tempIR * 0.15));
+  if(atNode)
+    motionSwitch(nextMo);
+  return atNode;
+}
+void holdDelay(int time{
+  for (int i = 0; i < time/40; i++){
+    send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
+    delay(40);
+  }
+}
 void getPath(char tMap){
   if(BT.available()) {
     BT.readBytes(&tMap, 256);

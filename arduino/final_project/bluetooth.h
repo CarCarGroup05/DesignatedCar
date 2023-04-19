@@ -51,7 +51,6 @@ void send_byte(byte *id, byte& idSize, bool newlyFound){
     Serial.println();
     newlyFound = false;
   }
-  return;
 }
 // enum BT_CMD {
 //   S, // stop
