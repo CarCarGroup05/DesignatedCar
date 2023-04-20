@@ -42,8 +42,6 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  // 建立MFRC522物件
 /*===========================define pin & create module object===========================*/
 
 /*============setup============*/
-// MFRC522 *mfrc522;
-// 宣告MFRC522指標
 void setup(){
   //bluetooth initialization
   BT.begin(9600);
@@ -90,7 +88,7 @@ bool newlyFound = false; // flag set as true when find a new TREASURE
 
 /*===========================declare function prototypes===========================*/
 void Search();  // search graph
-void getPath(char tMap);
+void getPath(char tMap); // get the path from python
 /*===========================declare function prototypes===========================*/
 
 /*===========================define function===========================*/
