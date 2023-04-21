@@ -12,7 +12,6 @@
 #ifndef track.h
 #define track.h
 /*===========================import variable===========================*/
-int extern _Tp;
 int tempIR = 0;// 五個IR的讀值總和
 /*===========================import variable===========================*/
 
@@ -50,6 +49,7 @@ void lrTurn(int n){
   MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
   holdDelay(800);
 }
+
 void motionSwitch(char nextMo){
   switch(nextMo){
       case 'S':

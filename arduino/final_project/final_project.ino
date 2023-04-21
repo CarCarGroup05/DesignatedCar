@@ -144,7 +144,6 @@ void holdDelay(int time){ // delay and search for RFIDs simultaneously
     send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   }
 }
-
 void getPath(char tMap){
   if(BT.available()) {
     BT.readBytes(&tMap, 256);
