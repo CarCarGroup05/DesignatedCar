@@ -12,7 +12,6 @@
 #ifndef track.h
 #define track.h
 /*===========================import variable===========================*/
-int extern _Tp;
 int tempIR = 0;// 五個IR的讀值總和
 /*===========================import variable===========================*/
 
@@ -44,7 +43,6 @@ void backTurn(){
   MotorInverter();
   holdDelay(880);
   MotorMove();
-
 }
 
 void lrTurn(int n){
