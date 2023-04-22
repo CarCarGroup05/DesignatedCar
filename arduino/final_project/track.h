@@ -74,5 +74,4 @@ void motionSwitch(char nextMo){
         break;
     }
 }
-
 #endif

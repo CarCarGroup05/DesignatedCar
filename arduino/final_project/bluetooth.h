@@ -29,7 +29,7 @@ bool askStart(){
   if(BT.available()){
 
       BT.readBytes(inptemp, 10);
-      if(inptemp[0] == 'Q'){
+      if(inptemp[0] == 'Q'){ // if receive 'Q' from python, then the car start running
         return true;
       }
       else
