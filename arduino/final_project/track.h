@@ -13,6 +13,7 @@
 #define track.h
 /*===========================import variable===========================*/
 int tempIR = 0;// 五個IR的讀值總和
+extern int _Tp;
 /*===========================import variable===========================*/
 
 void MotorWriting(double vL, double vR) {
