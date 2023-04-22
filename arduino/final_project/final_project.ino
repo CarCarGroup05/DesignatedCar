@@ -100,10 +100,9 @@ void loop(){
       received = ask_BT(treasureMap);
     }
     if(askStart()){
-      BT.write("Start~\n");
       MotorWriting(_Tp, _Tp);
+      delay(1000);
       start = true;
-      // done();
     }
   }
   send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
@@ -119,6 +118,9 @@ void Search(){
   if(mapState >= strlen(treasureMap)){
     MotorWriting(0, 0);
     BT.write("done!");
+    while(true){
+      send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
+    }
     start = false;
   }
 }

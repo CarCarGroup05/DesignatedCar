@@ -18,7 +18,7 @@ bool ask_BT(char treasureMap[]){ // get command from python
     BT.readBytes(treasureMap, 10);
     BT.write("Received!\n");
     for(int i = 0; i < strlen(treasureMap); i++)
-      Serial.println(treasureMap[i]);
+      Serial.print(treasureMap[i]);
     received = true;
     return true;
   }
