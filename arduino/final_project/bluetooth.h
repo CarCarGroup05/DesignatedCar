@@ -29,8 +29,8 @@ bool askStart(){
   if(BT.available()){
 
       BT.readBytes(inptemp, 10);
-      if(inptemp[0] == 'Q'){ // if receive 'Q' from python, then the car start running
-        return true;
+      if(inptemp[0] == 'Q'){ // if receive 'Q' from python
+        return true;         // , then the car start running
       }
       else
         return false;
@@ -43,28 +43,12 @@ bool askStart(){
 void send_byte(byte *id, byte& idSize, bool newlyFound){
   if(newlyFound){
     for (byte i = 0; i < 4; i++) {  // Send UID consequently.
-      // Serial.print("Success!");
-        BT.write(id[i]);
-        Serial.print(id[i],HEX);
+
+        BT.write(id[i]); // send id to python
+        Serial.print(id[i],HEX); // print id in arduino serail monitor 
     }
     Serial.println();
     newlyFound = false;
   }
 }
-// enum BT_CMD {
-//   S, // stop
-//   M, // move on 
-//   R, // righ turn 
-//   L, // left turn 
-//   B, // back turn
-//   // TODO: add your own command type here
-// };
-// #ifdef DEBUG
-// Serial.print("Sent id: ");
-// for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
-//   Serial.print(id[i], HEX);
-// }
-// Serial.println();
-// #endif
-// send_byte
 #endif
