@@ -14,22 +14,22 @@
 byte none = 0;
 byte* rfid(byte& idSize, bool& newlyFound) {
     // 確認是否有新卡片
-    if(!mfrc522.PICC_IsNewCardPresent()) {
-      newlyFound = false;
-      idSize = none;
-      goto FuncEnd;
-    } //PICC_IsNewCardPresent()：是否感應到新的卡片?
-    if(!mfrc522.PICC_ReadCardSerial()) {
-      newlyFound = false;
-      idSize = none;
-      goto FuncEnd;
-    }
-    byte *id = mfrc522.uid.uidByte;   // 取得卡片的UID
-    idSize = mfrc522.uid.size;   // 取得UID的長度
-    mfrc522.PICC_HaltA();  // 讓卡片進入停止模式
-    newlyFound = true;
-    FuncEnd:; // goto 跳到這.
-      return id; // return type : byte*
+  if(!mfrc522.PICC_IsNewCardPresent()) {
+    newlyFound = false;
+    idSize = none;
+    goto FuncEnd;
+  } //PICC_IsNewCardPresent()：是否感應到新的卡片?
+  if(!mfrc522.PICC_ReadCardSerial()) {
+    newlyFound = false;
+    idSize = none;
+    goto FuncEnd;
+  }
+  byte *id = mfrc522.uid.uidByte;   // 取得卡片的UID
+  idSize = mfrc522.uid.size;   // 取得UID的長度
+  mfrc522.PICC_HaltA();  // 讓卡片進入停止模式
+  newlyFound = true;
+  FuncEnd:; // goto 跳到這.
+    return id; // return type : byte*
 }
 
 
