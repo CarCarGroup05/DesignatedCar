@@ -8,11 +8,13 @@ import time
 import sys
 import os
 
+
 def main():
     maze = mz.Maze("data/small_maze.csv")
+
     started = False
-    #point = Scoreboard("1WeakGod", "http://140.112.175.18:3000")
-    # point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
+    point = Scoreboard("1WeakGod", "http://140.112.175.18:3000")
+    point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
     
     '''
     interf = BTinterface()
@@ -21,7 +23,7 @@ def main():
     # TODO : Initialize necessary variables
     s = int(input("start:"))
     e = int(input("end:"))
-    maze.BFS_2(s,e)
+    maze.BFS_2(s, e)
     maze.getActions_2()
     interf = BTinterface()
     interf.send_action(maze.actions_to_str_2())
@@ -33,6 +35,7 @@ def main():
             started = True
     while True:
         interf.get_UID()
+
 '''
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting")
@@ -44,4 +47,3 @@ def main():
 '''
 if __name__ == '__main__':
     main()
-
