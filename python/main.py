@@ -12,9 +12,10 @@ import os
 def main():
     maze = mz.Maze("data/small_maze.csv")
 
-    point = Scoreboard("123456789", "http://140.112.175.18:3000")
-    # point = ScoreboardFake("your team name", "data/fakeUID.csv")
-
+    started = False
+    point = Scoreboard("1WeakGod", "http://140.112.175.18:3000")
+    point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
+    
     '''
     interf = BTinterface()
     interf.start
@@ -27,12 +28,13 @@ def main():
     interf = BTinterface()
     interf.send_action(maze.actions_to_str_2())
     print(maze.actions_to_str_2())
-
-    while True:
+    
+    while started == False:
         if keyboard.read_key() == "q":
             interf.ser.SerialWriteString("Q")
-        interf.ser.SerialReadString()
-
+            started = True
+    while True:
+        interf.get_UID()
 
 '''
     if (sys.argv[1] == '0'):
