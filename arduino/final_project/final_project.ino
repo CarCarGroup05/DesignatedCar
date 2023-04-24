@@ -84,6 +84,7 @@ int irRead = 0;
 byte idSize = 8;
 bool atNode = true;
 bool newlyFound = false; // flag set as true when find a new TREASURE
+bool motorInitializer = false;
 /*===========================initialize variables===========================*/
 
 /*===========================declare function prototypes===========================*/
@@ -94,14 +95,21 @@ void getPath(char tMap); // get the path from python
 /*===========================define function===========================*/
 void loop(){
   while(!start){
+    send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
+    if(!motorInitializer){
+      motorInitializer = true;
+      Serial.println("initialized");
+    }
     while(!received){
-      if(Serial.available())
-        BT.write(Serial.read());
       received = ask_BT(treasureMap);
+      if(received)
+        Serial.print("I got the map\n");
     }
     if(askStart()){
-      MotorWriting(_Tp, _Tp);
-      delay(1000);
+      Serial.print("Start");
+      BT.write("Start!");
+      MotorMove();
+      delay(1200);
       start = true;
     }
   }

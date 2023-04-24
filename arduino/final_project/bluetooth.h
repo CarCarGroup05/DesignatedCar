@@ -13,7 +13,6 @@ char inptemp[10]; // 儲存起始指令的 buffer
 extern bool received;
 
 bool ask_BT(char treasureMap[]){ // get command from python
-  // successs();
   if(BT.available()){
     BT.readBytes(treasureMap, 10);
     BT.write("Received!\n");
@@ -27,14 +26,12 @@ bool ask_BT(char treasureMap[]){ // get command from python
 
 bool askStart(){
   if(BT.available()){
-
       BT.readBytes(inptemp, 10);
       if(inptemp[0] == 'Q'){ // if receive 'Q' from python, then the car start running
         return true;
       }
       else
         return false;
-
   }
   return false;
 }
@@ -42,29 +39,13 @@ bool askStart(){
 // send UID back through Serial1(bluetooth serial)
 void send_byte(byte *id, byte& idSize, bool newlyFound){
   if(newlyFound){
+    BT.write("Sending...");
     for (byte i = 0; i < 4; i++) {  // Send UID consequently.
       // Serial.print("Success!");
         BT.write(id[i]);
-        Serial.print(id[i],HEX);
     }
     Serial.println();
     newlyFound = false;
   }
 }
-// enum BT_CMD {
-//   S, // stop
-//   M, // move on 
-//   R, // righ turn 
-//   L, // left turn 
-//   B, // back turn
-//   // TODO: add your own command type here
-// };
-// #ifdef DEBUG
-// Serial.print("Sent id: ");
-// for (byte i = 0; i < idSize; i++) {  // Show UID consequently.
-//   Serial.print(id[i], HEX);
-// }
-// Serial.println();
-// #endif
-// send_byte
 #endif

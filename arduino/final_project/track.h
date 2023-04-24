@@ -42,13 +42,15 @@ void MotorMove(){
 
 void backTurn(){
   MotorInverter();
-  holdDelay(880);
+  delay(880);
+  // holdDelay(880);
   MotorMove();
 }
 
 void lrTurn(int n){
+  // delay(50);
   MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
-  delay(800);
+  delay(900);
   MotorMove();
 }
 
@@ -59,14 +61,14 @@ void motionSwitch(char nextMo){
         delay(100000);
         break;
       case 'M':
-        MotorWriting(_Tp, _Tp);
+        MotorMove();
         holdDelay(1000);
         break;
       case 'R':
-        lrTurn(0);
+        lrTurn(1);
         break;
       case 'L':
-        lrTurn(1);
+        lrTurn(0);
         break;
       case 'B':
         backTurn();
