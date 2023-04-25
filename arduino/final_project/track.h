@@ -47,8 +47,8 @@ void backTurn(){ // back turn
   MotorMove();
 }
 
-void lrTurn(int n){
-  // delay(50);
+// void lrTurn(int n){
+//    delay(50);
 void lrTurn(int n){ // left trun 
   MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
   delay(900);
