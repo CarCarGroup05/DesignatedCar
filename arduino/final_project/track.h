@@ -42,11 +42,12 @@ void MotorMove(){ // go straight
 
 void backTurn(){ // back turn
   MotorInverter();
-  delay(880);
+  delay(550);
   // holdDelay(880);
   MotorMove();
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 void lrTurn(int n){
   // delay(50);
@@ -55,24 +56,36 @@ void lrTurn(int n){ // left trun
 >>>>>>> 1373dce (add some comments)
   MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
   delay(900);
+=======
+void lrTurn(int n){ // left trun 
+  MotorWriting(_Tp * (1 - ((n+1)%2)*2) / 6, _Tp * (1-((n)%2)*2) / 6);
+  // MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
+  delay(600);
+>>>>>>> 85175cb (Arduino issue solved)
   MotorMove();
 }
 
 void motionSwitch(char nextMo){
   switch(nextMo){
       case 'S': // stop
+        holdDelay(100);
         MotorWriting(0, 0);
         delay(100000);
         break;
 <<<<<<< HEAD
       case 'M':
         MotorMove();
+<<<<<<< HEAD
         holdDelay(1000);
+=======
+        delay(400);
+>>>>>>> 85175cb (Arduino issue solved)
         break;
       case 'R':
-        lrTurn(1);
+        lrTurn(0);
         break;
       case 'L':
+<<<<<<< HEAD
         lrTurn(0);
 =======
       case 'M': // move on
@@ -85,6 +98,9 @@ void motionSwitch(char nextMo){
       case 'L': // turn left
         lrTurn(1);
 >>>>>>> 1373dce (add some comments)
+=======
+        lrTurn(1);
+>>>>>>> 85175cb (Arduino issue solved)
         break;
       case 'B': // back turn
         backTurn();

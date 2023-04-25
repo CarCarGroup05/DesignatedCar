@@ -75,7 +75,7 @@ void setup(){
 /*=====Import header files=====*/
 
 /*===========================initialize variables===========================*/
-int _Tp = 160;  // set your own value for motor power
+int _Tp = 240;  // set your own value for motor power
 int mapState = 0;
 bool start = false;
 bool received = false;
@@ -117,15 +117,13 @@ void loop(){
       Serial.print("Start");
       BT.write("Start!");
       MotorMove();
-      delay(1200);
+      delay(400);
       start = true;
     }
   }
   // use send_byte() function to send uid to python
   // use rfid() function to read uid
   send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
-
-  // search() is a function to start search 
   Search();
 }
 
@@ -146,13 +144,15 @@ void Search(){
 }
 
 bool tracking(char nextMo){
+  tempIR = 0;
   atNode = true;
   for(int i = 0; i < 5; i++){
     if(!digitalRead(32 + 2 * i))
       atNode = false;
     tempIR += (i - 2)*digitalRead(32 + 2 * i);
   }
-  MotorWriting(_Tp* (1 + tempIR * 0.15), _Tp * (1 - tempIR * 0.15));
+  MotorWriting(_Tp* (1 + tempIR * 0.1 - abs(tempIR) * 0.1), _Tp * (1 - tempIR * 0.1 - abs(tempIR) * 0.1));
+  // MotorWriting(_Tp* (1 + tempIR * 0.15), _Tp * (1 - tempIR * 0.15));
   if(atNode)
     motionSwitch(nextMo);
   return atNode;

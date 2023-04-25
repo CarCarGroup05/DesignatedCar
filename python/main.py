@@ -13,9 +13,9 @@ def main():
 
     maze = mz.Maze("data/small_maze.csv")
 
-    point = Scoreboard("123456789", "http://140.112.175.18:3000")
-    # point = ScoreboardFake("your team name", "data/fakeUID.csv")
-
+    started = False
+    #point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
+    point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
     '''
     interf = BTinterface()
     interf.start
