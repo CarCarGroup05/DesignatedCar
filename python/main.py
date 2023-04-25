@@ -13,7 +13,7 @@ def main():
     maze = mz.Maze("data/small_maze.csv")
 
     started = False
-    point = Scoreboard("1WeakGod", "http://140.112.175.18:3000")
+    #point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
     point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
     
     '''
