@@ -42,34 +42,34 @@ void MotorMove(){ // go straight
 
 void backTurn(){ // back turn
   MotorInverter();
-  delay(880);
+  delay(550);
   // holdDelay(880);
   MotorMove();
 }
 
-// void lrTurn(int n){
-//    delay(50);
 void lrTurn(int n){ // left trun 
-  MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
-  delay(900);
+  MotorWriting(_Tp * (1 - ((n+1)%2)*2) / 6, _Tp * (1-((n)%2)*2) / 6);
+  // MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
+  delay(600);
   MotorMove();
 }
 
 void motionSwitch(char nextMo){
   switch(nextMo){
       case 'S': // stop
+        holdDelay(100);
         MotorWriting(0, 0);
         delay(100000);
         break;
       case 'M':
         MotorMove();
-        delay(1000);
+        delay(400);
         break;
       case 'R':
-        lrTurn(1);
+        lrTurn(0);
         break;
       case 'L':
-        lrTurn(0);
+        lrTurn(1);
         break;
       case 'B': // back turn
         backTurn();
