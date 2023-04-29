@@ -10,6 +10,7 @@ import os
 
 
 def main():
+
     maze = mz.Maze("data/cross.csv")
 
     started = False
@@ -25,11 +26,11 @@ def main():
     maze.BFS_2(s, e)
     maze.getActions_2()
     interf = BTinterface()
-    if keyboard.read_key() == "s":
-        interf.send_action(maze.actions_to_str_2())
+    interf.send_action(maze.actions_to_str_2())
     print(maze.actions_to_str_2())
 
-    while started == False:
+
+    while True:
         if keyboard.read_key() == "q":
             interf.ser.SerialWriteString("Q")
             point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
@@ -41,10 +42,9 @@ def main():
             point.add_UID(RFID[-8:].upper())
             print("score:", point.getCurrentScore())
 
-        # interf.ser.SerialReadString()
+         interf.ser.SerialReadString()
 
 
-'''
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting")
         # TODO : for treasure-hunting, which encourages you to hunt as many scores as possible
@@ -55,3 +55,5 @@ def main():
 '''
 if __name__ == '__main__':
     main()
+
+'''
