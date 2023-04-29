@@ -14,8 +14,8 @@ def main():
     maze = mz.Maze("data/cross.csv")
 
     started = False
-    #point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
-    point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
+    # point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
+    # point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
     '''
     interf = BTinterface()
     interf.start
@@ -33,7 +33,17 @@ def main():
     while True:
         if keyboard.read_key() == "q":
             interf.ser.SerialWriteString("Q")
-        interf.ser.SerialReadString()
+            point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
+            # point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
+            started = True
+    while True:
+        RFID = interf.get_UID()
+        if RFID:
+            point.add_UID(RFID[-8:].upper())
+            print("score:", point.getCurrentScore())
+
+         interf.ser.SerialReadString()
+
 
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting")
