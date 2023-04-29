@@ -10,7 +10,7 @@
 #include <SPI.h>
 #include <MFRC522.h>
 #include <SoftwareSerial.h>
-#include "node.h"
+// #include "node.h" // redundant
 
 /*===========================define pin & create module object================================*/
 // BlueTooth
@@ -81,15 +81,17 @@ bool start = false;
 bool received = false;
 char treasureMap[256];
 int irRead = 0;
-byte idSize = 8;
-bool atNode = true;
+byte idSize = 8; // store size of id
+bool atNode = true; // to check whether the car is at node or not
 bool newlyFound = false; // flag set as true when find a new TREASURE
 bool motorInitializer = false;
 /*===========================initialize variables===========================*/
 
 /*===========================declare function prototypes===========================*/
+
 void Search();  // search graph
 void getPath(char tMap); // get the path from python
+
 /*===========================declare function prototypes===========================*/
 
 /*===========================define function===========================*/
@@ -101,9 +103,15 @@ void loop(){
       Serial.println("initialized");
     }
     while(!received){
+<<<<<<< HEAD
       received = ask_BT(treasureMap);
       if(received)
         Serial.print("I got the map\n");
+=======
+      if(Serial.available())
+        BT.write(Serial.read());
+      received = ask_BT(treasureMap); // received the treasure map from python
+>>>>>>> 1373dce (add some comments)
     }
     if(askStart()){
       Serial.print("Start");
@@ -113,7 +121,11 @@ void loop(){
       start = true;
     }
   }
+  // use send_byte() function to send uid to python
+  // use rfid() function to read uid
   send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
+
+  // search() is a function to start search 
   Search();
 }
 
@@ -152,6 +164,7 @@ void holdDelay(int time){ // delay and search for RFIDs simultaneously
     send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   }
 }
+
 void getPath(char tMap){
   if(BT.available()) {
     BT.readBytes(&tMap, 256);

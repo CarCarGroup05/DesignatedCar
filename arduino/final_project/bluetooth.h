@@ -27,8 +27,8 @@ bool ask_BT(char treasureMap[]){ // get command from python
 bool askStart(){
   if(BT.available()){
       BT.readBytes(inptemp, 10);
-      if(inptemp[0] == 'Q'){ // if receive 'Q' from python, then the car start running
-        return true;
+      if(inptemp[0] == 'Q'){ // if receive 'Q' from python
+        return true;         // , then the car start running
       }
       else
         return false;
@@ -41,8 +41,14 @@ void send_byte(byte *id, byte& idSize, bool newlyFound){
   if(newlyFound){
     BT.write("Sending...");
     for (byte i = 0; i < 4; i++) {  // Send UID consequently.
+<<<<<<< HEAD
       // Serial.print("Success!");
         BT.write(id[i]);
+=======
+
+        BT.write(id[i]); // send id to python
+        Serial.print(id[i],HEX); // print id in arduino serail monitor 
+>>>>>>> 1373dce (add some comments)
     }
     Serial.println();
     newlyFound = false;
