@@ -45,8 +45,8 @@ def main():
     while started == False:
         if keyboard.read_key() == "q":
             interf.ser.SerialWriteString("Q")
-            # point = Scoreboard("1WeakGod", "http://140.112.175.18:3000")
-            point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
+            point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
+            # point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
             started = True
     while True:
         RFID = interf.get_UID()
