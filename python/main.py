@@ -11,7 +11,7 @@ import os
 
 def main():
 
-    maze = mz.Maze("data/small_maze.csv")
+    maze = mz.Maze("data/cross.csv")
 
     started = False
     #point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
