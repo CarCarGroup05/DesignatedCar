@@ -13,12 +13,8 @@
 /* pin---- SDA:9 SCK:13 MOSI:11 MISO:12 GND:GND RST:define on your own  */
 byte none = 0;
 byte* rfid(byte& idSize, bool& newlyFound) {
-<<<<<<< HEAD
   Serial.println("reading");
     // 確認是否有新卡片
-=======
-    // confirm whether RFID detected a new card or not
->>>>>>> 1373dce (add some comments)
   if(!mfrc522.PICC_IsNewCardPresent()) {
     newlyFound = false;
     idSize = none;

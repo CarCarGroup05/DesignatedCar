@@ -19,7 +19,7 @@ extern int _Tp;
 void MotorWriting(double vL, double vR) {
   // TODO: use TB6612 to control motor voltage & direction
   analogWrite(MotorL_PWML, vL);
-  analogWrite(MotorR_PWMR, vR);
+  analogWrite(MotorR_PWMR, vR-3);
 }// MotorWriting
 
 // Handle negative motor_PWMR value.
@@ -29,7 +29,7 @@ void MotorInverter() {
   digitalWrite(MotorR_I2, 1);
   digitalWrite(MotorL_I3, 1);
   digitalWrite(MotorL_I4, 0);
-  MotorWriting(_Tp, _Tp);
+  MotorWriting(_Tp, _Tp); 
 }// MotorInverter
 
 void MotorMove(){ // go straight
@@ -37,21 +37,19 @@ void MotorMove(){ // go straight
   digitalWrite(MotorR_I2, 0);
   digitalWrite(MotorL_I3, 1);
   digitalWrite(MotorL_I4, 0);
-  MotorWriting(_Tp, _Tp);
+  MotorWriting(_Tp, _Tp); 
 }
 
 void backTurn(){ // back turn
   MotorInverter();
-  delay(880);
-  // holdDelay(880);
+  delay(580);
   MotorMove();
 }
 
-
-=======
 void lrTurn(int n){ // left trun 
-  MotorWriting(_Tp * (1 + (n%2)*2) / 2, _Tp * (1+((n+1)%2)*2) / 2);
-  delay(900);
+  delay(100);
+  MotorWriting(_Tp * (1 - ((n+1)%2)*2) / 6, _Tp * (1-((n)%2)*2) / 6);
+  delay(700);
   MotorMove();
 }
 
@@ -64,7 +62,8 @@ void motionSwitch(char nextMo){
 
       case 'M': // move on
         MotorWriting(_Tp, _Tp);
-        holdDelay(1000);
+        holdDelay(400);
+        MotorMove();
         break;
       case 'R': // turn right
         lrTurn(0);

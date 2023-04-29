@@ -74,8 +74,8 @@ void setup(){
 #include "bluetooth.h"
 /*=====Import header files=====*/
 
-/*===========================initialize variables===========================*/
-int _Tp = 160;  // set your own value for motor power
+/*=======5====================initialize variables===========================*/
+int _Tp = 250;  // set your own value for motor power
 int mapState = 0;
 bool start = false;
 bool received = false;
@@ -85,6 +85,7 @@ byte idSize = 8; // store size of id
 bool atNode = true; // to check whether the car is at node or not
 bool newlyFound = false; // flag set as true when find a new TREASURE
 bool motorInitializer = false;
+int test = 888;
 /*===========================initialize variables===========================*/
 
 /*===========================declare function prototypes===========================*/
@@ -109,16 +110,15 @@ void loop(){
     }
     if(askStart()){
       Serial.print("Start");
-      BT.write("Start!");
       MotorMove();
-      delay(1200);
+      delay(400);
       start = true;
     }
   }
   // use send_byte() function to send uid to python
   // use rfid() function to read uid
   send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
-
+  BT.write(test);
   // search() is a function to start search 
   Search();
 }
@@ -131,7 +131,6 @@ void Search(){
     mapState++;
   if(mapState >= strlen(treasureMap)){
     MotorWriting(0, 0);
-    BT.write("done!");
     while(true){
       send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
     }
@@ -140,13 +139,14 @@ void Search(){
 }
 
 bool tracking(char nextMo){
+  tempIR = 0;
   atNode = true;
   for(int i = 0; i < 5; i++){
     if(!digitalRead(32 + 2 * i))
       atNode = false;
     tempIR += (i - 2)*digitalRead(32 + 2 * i);
   }
-  MotorWriting(_Tp* (1 + tempIR * 0.15), _Tp * (1 - tempIR * 0.15));
+  MotorWriting(_Tp* (1 + tempIR * 0.1 - abs(tempIR) * 0.1), _Tp * (1 - tempIR * 0.1 - abs(tempIR) * 0.1));
   if(atNode)
     motionSwitch(nextMo);
   return atNode;

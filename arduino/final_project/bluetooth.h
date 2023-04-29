@@ -9,13 +9,12 @@
 #ifndef bluetooth_h
 #define bluetooth_h
 
-char inptemp[10]; // 儲存起始指令的 buffer
+char inptemp[256]; // 儲存起始指令的 buffer
 extern bool received;
 
 bool ask_BT(char treasureMap[]){ // get command from python
   if(BT.available()){
-    BT.readBytes(treasureMap, 10);
-    BT.write("Received!\n");
+    BT.readBytes(treasureMap, 256);
     for(int i = 0; i < strlen(treasureMap); i++)
       Serial.print(treasureMap[i]);
     received = true;
@@ -39,10 +38,7 @@ bool askStart(){
 // send UID back through Serial1(bluetooth serial)
 void send_byte(byte *id, byte& idSize, bool newlyFound){
   if(newlyFound){
-    BT.write("Sending...");
     for (byte i = 0; i < 4; i++) {  // Send UID consequently.
-
-
         BT.write(id[i]); // send id to python
         Serial.print(id[i],HEX); // print id in arduino serail monitor 
     }
