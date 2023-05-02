@@ -10,8 +10,13 @@ import os
 
 def main():
     maze = mz.Maze("data/medium_maze.csv")
-    
+
+    maze = mz.Maze("data/medium_maze.csv")
+        
     started = False
+    
+
+
     
     '''
     interf = BTinterface()
@@ -19,10 +24,15 @@ def main():
     '''
     # TODO : Initialize necessary variables
     '''
+    '''
     s = int(input("start:"))
     e = int(input("end:"))
     maze.BFS_2(s,e)
+    maze.BFS_2(s,e)
     maze.getActions_2()
+    '''
+    maze.BFS_continuous(1,100)
+
     interf = BTinterface()
     if keyboard.read_key() == "s":
         interf.send_action(maze.actions_to_str_2())
@@ -30,7 +40,7 @@ def main():
 
     '''
     maze.BFS_continuous(1,100)
-'''
+    '''
     interf = BTinterface()
     print(maze.shortest_route)
     if keyboard.read_key() == "s":
@@ -38,26 +48,36 @@ def main():
     print(maze.actions_to_str())'''
     
     while started == False:
+    #print(maze.shortest_route)
+    #if keyboard.read_key() == "s":
+        #interf.send_action(maze.actions_to_str())#("BBBBBBBBBBBBBB")
+    #print(maze.actions_to_str())
+    
+    #while started == False:
         if keyboard.read_key() == "q":
+            point = Scoreboard("WeakGod2", "http://140.112.175.18:3000")
+            #point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
             point = Scoreboard("WeakGod2", "http://140.112.175.18:3000")
             #point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
             interf.ser.SerialWriteString("Q")
     while started == False:
         if keyboard.read_key() == "q":
+            point = Scoreboard("WeakGod2", "http://140.112.175.18:3000")
+            #point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
             interf.ser.SerialWriteString("Q")
             point = Scoreboard("WeakGod", "http://140.112.175.18:3000")
-            # point = ScoreboardFake("WeakGod", "data/fakeUID.csv")
             started = True
     while True:
         RFID = interf.get_UID()
         
+        
         if RFID:
             print(RFID)
+            print(RFID)
             point.add_UID(RFID[-8:].upper())
-            print("score:",point.getCurrentScore())
+            print("score:", point.getCurrentScore())
 
-        #interf.ser.SerialReadString()
-
+        # interf.ser.SerialReadString()
 '''
     if (sys.argv[1] == '0'):
         print("Mode 0: for treasure-hunting")
