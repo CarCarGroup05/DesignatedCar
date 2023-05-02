@@ -9,15 +9,13 @@
 #ifndef bluetooth_h
 #define bluetooth_h
 
-char inptemp[256]; // 儲存起始指令的 buffer
-extern bool received;
+char inpTemp[10]; // 儲存起始指令的 buffer
 
-bool ask_BT(char treasureMap[]){ // get command from python
+bool ask_BT(char &nextMove){ // get command from python
   if(BT.available()){
-    BT.readBytes(treasureMap, 256);
-    for(int i = 0; i < strlen(treasureMap); i++)
-      Serial.print(treasureMap[i]);
-    received = true;
+    BT.readBytes(inpTemp, 10);
+    nextMove = inpTemp[0];
+    // Serial.println(nextMove);
     return true;
   }
   return false;
@@ -25,12 +23,24 @@ bool ask_BT(char treasureMap[]){ // get command from python
 
 bool askStart(){
   if(BT.available()){
-      BT.readBytes(inptemp, 10);
-      if(inptemp[0] == 'Q'){ // if receive 'Q' from python
-        return true;         // , then the car start running
-      }
+      BT.readBytes(inpTemp, 10);
+      if(inpTemp[0] == 'Q')// if receive 'Q' from python
+        return true;       // , then the car start running
       else
         return false;
+  }
+  return false;
+}
+
+bool askNext(char& nextMo){
+  unsigned long s1, e1;
+  s1 = millis();
+  if(BT.available()){
+    e1 = millis(); 
+    Serial.println((e1-s1));
+    nextMo = BT.read();
+    Serial.print(nextMo);
+    return true;
   }
   return false;
 }

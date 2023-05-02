@@ -2,7 +2,7 @@
 // File       [final_project.ino]
 // Author     [Erik Kuo]
 // Synopsis   [Code for managing main process]
-// Functions  [setup, loop, Search, getPath]
+// Functions  [setup, loop, Search]
 // Modify     [2020/03/27 Erik Kuo]
 /***************************************************************************/
 
@@ -58,6 +58,10 @@ void setup(){
   pinMode(MotorL_I4, OUTPUT);
   pinMode(MotorL_PWML, OUTPUT);
   pinMode(MotorR_PWMR, OUTPUT);
+  digitalWrite(MotorR_I1, 1);
+  digitalWrite(MotorR_I2, 0);
+  digitalWrite(MotorL_I3, 1);
+  digitalWrite(MotorL_I4, 0);
 
   //tracking(IR) pin
   pinMode(IRpin_LL, INPUT);
@@ -79,37 +83,34 @@ int _Tp = 250;  // set your own value for motor power
 int mapState = 0;
 bool start = false;
 bool received = false;
-char treasureMap[256];
+char stepTemp[10], nextMove;
 int irRead = 0;
 byte idSize = 8; // store size of id
 bool atNode = true; // to check whether the car is at node or not
 bool newlyFound = false; // flag set as true when find a new TREASURE
 bool motorInitializer = false;
-int test = 888;
+int test = 15;
+unsigned long startTime, endTime;
 /*===========================initialize variables===========================*/
 
 /*===========================declare function prototypes===========================*/
 
 void Search();  // search graph
-void getPath(char tMap); // get the path from python
+void tracking(char);
+void holdDelay(int);
+void askDelay(int);
 
 /*===========================declare function prototypes===========================*/
 
 /*===========================define function===========================*/
 void loop(){
+  // MotorWriting(_Tp, _Tp);
   while(!start){
     send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
-    if(!motorInitializer){
-      motorInitializer = true;
-      Serial.println("initialized");
-    }
     while(!received){
-      received = ask_BT(treasureMap);
-      if(received)
-        Serial.print("I got the map\n");
+      received = ask_BT(nextMove);
     }
     if(askStart()){
-      Serial.print("Start");
       MotorMove();
       delay(400);
       start = true;
@@ -118,27 +119,19 @@ void loop(){
   // use send_byte() function to send uid to python
   // use rfid() function to read uid
   send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
-  BT.write(test);
   // search() is a function to start search 
   Search();
 }
 
 /*===========================define function===========================*/
 void Search(){
-  send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
+  if(nextMove == "B")
+    send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   // flag newlyFound determines whether to send UID
-  if(tracking(treasureMap[mapState]))
-    mapState++;
-  if(mapState >= strlen(treasureMap)){
-    MotorWriting(0, 0);
-    while(true){
-      send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
-    }
-    start = false;
-  }
+  tracking(nextMove);
 }
 
-bool tracking(char nextMo){
+void tracking(char nextMo){
   tempIR = 0;
   atNode = true;
   for(int i = 0; i < 5; i++){
@@ -149,20 +142,31 @@ bool tracking(char nextMo){
   MotorWriting(_Tp* (1 + tempIR * 0.1 - abs(tempIR) * 0.1), _Tp * (1 - tempIR * 0.1 - abs(tempIR) * 0.1));
   if(atNode)
     motionSwitch(nextMo);
-  return atNode;
 }
 
 void holdDelay(int time){ // delay and search for RFIDs simultaneously
-  for(int i = 0; i < time/40; i++){
-    delay(40);
+  for(int i = 0; i < time/20; i++){
+    delay(20);
     send_byte(rfid(idSize, newlyFound), idSize, newlyFound);
   }
 }
 
-void getPath(char tMap){
-  if(BT.available()) {
-    BT.readBytes(&tMap, 256);
-    Serial.println(tMap);
+void askDelay(unsigned long time){
+  bool nextStep = false;
+  startTime = millis();
+  endTime = millis();
+  BT.write(test);
+  while((time - (endTime - startTime)) <= 10000 && !nextStep){
+    nextStep = askNext(nextMove);
+    endTime = millis();
+    if(nextStep){
+      break;
+    }
   }
+  endTime = millis();
+  Serial.println((endTime - startTime));
+  if((time - (endTime - startTime)) < time)
+    delay((time - (endTime - startTime)));
 }
+
 /*===========================define function===========================*/
